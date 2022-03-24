@@ -1,0 +1,21 @@
+* {
+  box-sizing: border-box;
+  caret-color: transparent;
+}
+
+html, body {
+  height: 100%;
+}
+
+body {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  vertical-align: center;
+  flex-wrap: wrap;
+  align-content: center;
+  flex-direction: column;
+
+  font-family: 'Open Sans', sans-serif;
+  background: linear-gradient(top, #222, #333);
+}
