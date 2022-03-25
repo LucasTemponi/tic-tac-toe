@@ -19,3 +19,8 @@ body {
   font-family: 'Open Sans', sans-serif;
   background: linear-gradient(top, #222, #333);
 }
+
+button{
+  margin-left: 0.5em;
+  margin-right: 0.5em;
+}

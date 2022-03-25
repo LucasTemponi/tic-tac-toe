@@ -7,6 +7,7 @@ interface ICheckers{
     board:string[][]
     xIsNext:boolean
     winner:string
+    status:string
 }
 
 export const Board:FC = ()=>{
@@ -17,7 +18,8 @@ export const Board:FC = ()=>{
             ['', '', ''],
             ['', '', '']],
         xIsNext:true,
-        winner:''    
+        winner:'',
+        status:'NEW_GAME'    
     })
     const [isOpen,setIsOpen] = React.useState<boolean>(true)
 
@@ -26,41 +28,42 @@ export const Board:FC = ()=>{
             if(!gameState.board[column][row]){
                 let squareState:string[][] = gameState.board.slice()
                 squareState[column][row]= gameState.xIsNext ? 'X':'O'
-                setGameState({...gameState,xIsNext:!gameState.xIsNext,board:squareState})
+                setGameState({...gameState,xIsNext:!gameState.xIsNext,board:squareState,status:'PLAYING'})
             }
         }         
     }
 
     React.useEffect(()=>{
-        if(checkWin()){
+        if(checkWin()){         
             announceWinner()
             return
         }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     },[gameState.board])
 
     const checkWin = ()=>{
         for (let i = 0; i < gameState.board.length; i++) {
-            if (gameState.board[i][0] === gameState.board[i][1] && gameState.board[i][1] === gameState.board[i][2]) {
+            if (gameState.board[i][0] === gameState.board[i][1] && gameState.board[i][1] === gameState.board[i][2]&& gameState.board[i][1]!=='') {
                 return gameState.board[i][0];
             }
         }
         for (let i = 0; i < gameState.board.length; i++) {
-            if (gameState.board[0][i] === gameState.board[1][i] && gameState.board[1][i] === gameState.board[2][i]) {
+            if (gameState.board[0][i] === gameState.board[1][i] && gameState.board[1][i] === gameState.board[2][i] && gameState.board[1][i]!=='') {
                 return gameState.board[0][i];
             }
         }
-        if (gameState.board[0][0] === gameState.board[1][1] && gameState.board[1][1] === gameState.board[2][2]) {
-            return true;
+        if (gameState.board[0][0] === gameState.board[1][1] && gameState.board[1][1] === gameState.board[2][2] && gameState.board[2][2] !== "") {
+            return gameState.board[0][0];
         }
-        if (gameState.board[0][2] === gameState.board[1][1] && gameState.board[1][1] === gameState.board[2][0]) {
-            return true;
+        if (gameState.board[0][2] === gameState.board[1][1] && gameState.board[1][1] === gameState.board[2][0] && gameState.board[0][2] !== '') {
+            return gameState.board[0][2];
         }
-        return false;        
+        return false;
     }
 
     const announceWinner = function () {
         let lastPlayer:string = gameState.xIsNext ? 'O':'X' 
-        setGameState({...gameState,winner:lastPlayer})
+        setGameState({...gameState,winner:lastPlayer,status:`${lastPlayer}_WON`});
         setIsOpen(true)
         console.log(`${lastPlayer} wins!`)
     }
@@ -72,13 +75,14 @@ export const Board:FC = ()=>{
                 ['', '', ''],
                 ['', '', '']],
             xIsNext:true,
-            winner:''    
+            winner:'',
+            status:'NEW_GAME'    
         })
     }
 
     return (
         <body>
-            {isOpen && <Modal setIsOpen={setIsOpen}/>}
+            {isOpen && <Modal gameStatus={gameState.status} setIsOpen={()=>setIsOpen(!isOpen)}/>}
             <div className="ticTacToe">
                 {gameState.board.map((column,index) => <Column clickFunc = {play} column={column} key={index} columnNumber={index}/> )}
             </div>

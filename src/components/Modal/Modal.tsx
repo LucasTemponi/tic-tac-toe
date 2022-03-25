@@ -2,17 +2,24 @@ import React from 'react'
 import './Modal.css'
 import {FC} from 'react'
 
-interface props{
-    setIsOpen:React.Dispatch<React.SetStateAction<boolean>>
+interface IModal{
+    setIsOpen:(openState:boolean)=>void
+    gameStatus:string
 }
 
-const Modal:FC<props> = (setIsOpen)=>{
+const Modal:FC<IModal> = ({setIsOpen,gameStatus})=>{
     return(
-    <div className='modal'>
+    <div className='modal' onClick={()=>setIsOpen(false)}>
         <div className='modal-content'>
-            <h1>Hello World</h1>
-        </div>
-        
+            {
+                {
+                    'NEW_GAME':<h1>Hello World</h1>,
+                    'X_WON':<h1>X venceu!</h1>,
+                    'O_WON':<h1>O venceu!</h1>,
+                    'PLAYING':<h1>GAME PAUSED</h1>
+                }[gameStatus]
+            }            
+        </div>        
     </div>)
 }
 
