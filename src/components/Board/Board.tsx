@@ -36,8 +36,11 @@ export const Board:FC = ()=>{
 
     React.useEffect(()=>{
         if(checkWin()){         
-            announceWinner()
+            announceWinner();
             return
+        }
+        if(!gameState.xIsNext){
+            setTimeout(()=>{superAI()},600);
         }
     // eslint-disable-next-line react-hooks/exhaustive-deps
     },[gameState.board])
@@ -62,11 +65,23 @@ export const Board:FC = ()=>{
         return false;
     }
 
+    const superAI = ()=>{
+        let invalidMove = true;
+        while(invalidMove){
+            const nextMoveColumn:number = Math.floor(Math.random()*3);
+            const nextMoveRow:number = Math.floor(Math.random()*3);
+            if (gameState.board[nextMoveColumn][nextMoveRow] === ''){
+                play(nextMoveColumn,nextMoveRow);
+                invalidMove = false;
+            }
+        }        
+    }
+
     const announceWinner = function () {
-        let lastPlayer:string = gameState.xIsNext ? 'O':'X' 
+        let lastPlayer:string = gameState.xIsNext ? 'O':'X' ;
         setGameState({...gameState,winner:lastPlayer,status:`${lastPlayer}_WON`});
-        setIsOpen(true)
-        console.log(`${lastPlayer} wins!`)
+        setIsOpen(true);
+        console.log(`${lastPlayer} wins!`);
     }
 
     const restartGame = ()=>{
@@ -78,7 +93,7 @@ export const Board:FC = ()=>{
             xIsNext:true,
             winner:'',
             status:'NEW_GAME'    
-        })
+        });
     }
 
     return (
@@ -90,7 +105,6 @@ export const Board:FC = ()=>{
             </div>            
             <div className='Header'>
                 <h3>Próxima jogada: {gameState.xIsNext ? 'X':'O'}</h3>
-
             </div>
         </body>        
     )
