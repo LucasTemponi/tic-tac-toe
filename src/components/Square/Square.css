@@ -5,12 +5,17 @@
     border: 1px solid #e4e4e4;
 
     color: #e4e4e4;
-    font-size: 5em;
+    font-size: min(5em,20vw);
     font-weight: 100;
     text-align: center;
+    justify-content: center;
     padding: 20px;
 }
 
 .square:hover{
     border:solid #efefef
+}
+
+span{
+    margin:auto 0em;
 }

@@ -83,16 +83,14 @@ export const Board:FC = ()=>{
 
     return (
         <body>
-            <Header/>
-            {isOpen && <Modal newGame={restartGame} gameStatus={gameState.status} setIsOpen={()=>setIsOpen(!isOpen)}/>}
+            <Header setIsOpen={()=>setIsOpen(!isOpen)}/>
+            {isOpen && <Modal newGame={restartGame} giveUp={announceWinner} gameStatus={gameState.status} setIsOpen={()=>setIsOpen(!isOpen)}/>}
             <div className="ticTacToe">
                 {gameState.board.map((column,index) => <Column clickFunc = {play} column={column} key={index} columnNumber={index}/> )}
             </div>            
             <div className='Header'>
-                <h3>Next player: {gameState.xIsNext ? 'X':'O'}</h3>
-                <button onClick={()=>announceWinner()}>Desistir</button>
-                <button onClick={()=>restartGame()}>Recomeçar</button>
-                <button onClick={()=>setIsOpen(!isOpen)}>Fecha modal</button>
+                <h3>Próxima jogada: {gameState.xIsNext ? 'X':'O'}</h3>
+
             </div>
         </body>        
     )

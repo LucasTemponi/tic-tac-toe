@@ -4,7 +4,7 @@
 }
 
 html, body {
-  height: 100%;
+  height: 100%;  
 }
 
 body {
@@ -56,3 +56,8 @@ button:hover {
   opacity: 0.9;
 }
     
+@media (prefer-color-scheme:dark){
+  body{
+    background-color: #25292e;
+  }
+}
