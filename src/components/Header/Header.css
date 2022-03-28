@@ -1,0 +1,11 @@
+.header{
+    display: flex;
+    flex-direction: row;
+}
+
+.header img{
+    width:2em;
+    height: 2em;
+    margin:auto;
+    margin-left: 5em;
+}
