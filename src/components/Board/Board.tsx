@@ -1,6 +1,7 @@
 import './Board.css'
 import Column from '../Column/Column'
 import Modal from '../Modal/Modal'
+import Header from '../Header/Header'
 import React,{FC} from 'react'
 
 interface ICheckers{
@@ -82,12 +83,13 @@ export const Board:FC = ()=>{
 
     return (
         <body>
-            {isOpen && <Modal gameStatus={gameState.status} setIsOpen={()=>setIsOpen(!isOpen)}/>}
+            <Header/>
+            {isOpen && <Modal newGame={restartGame} gameStatus={gameState.status} setIsOpen={()=>setIsOpen(!isOpen)}/>}
             <div className="ticTacToe">
                 {gameState.board.map((column,index) => <Column clickFunc = {play} column={column} key={index} columnNumber={index}/> )}
-            </div>
+            </div>            
             <div className='Header'>
-                <h1>Next player: {gameState.xIsNext ? 'X':'O'}</h1>
+                <h3>Next player: {gameState.xIsNext ? 'X':'O'}</h3>
                 <button onClick={()=>announceWinner()}>Desistir</button>
                 <button onClick={()=>restartGame()}>Recomeçar</button>
                 <button onClick={()=>setIsOpen(!isOpen)}>Fecha modal</button>

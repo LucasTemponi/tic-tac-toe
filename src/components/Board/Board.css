@@ -2,8 +2,8 @@
     display: flex;
     justify-content: space-between;
 
-    width: 400px;
-    height: 400px;
+    width: min(400px, 95vw);
+    height: min(400px, 95vw);
     padding: 5px;
     border: 1px solid #e4e4e4;
 }
