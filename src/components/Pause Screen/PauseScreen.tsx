@@ -2,10 +2,9 @@ import {FC} from 'react'
 
 interface IProps{
     resetGame:()=>void;
-    giveUp:()=>void
 }
 
-const PauseScreen:FC<IProps> = ({resetGame,giveUp})=>{
+const PauseScreen:FC<IProps> = ({resetGame})=>{
     return (
         <>
             <h1>JOGO PAUSADO</h1>

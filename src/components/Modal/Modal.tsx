@@ -9,10 +9,9 @@ interface IModal{
     setIsOpen:(openState:boolean)=>void
     gameStatus:string
     newGame:()=>void
-    giveUp:()=>void
 }
 
-const Modal:FC<IModal> = ({setIsOpen,gameStatus,newGame,giveUp})=>{
+const Modal:FC<IModal> = ({setIsOpen,gameStatus,newGame})=>{
     return(
     <div className='modal' onClick={()=>setIsOpen(false)}>
         <div className='modal-content'>
@@ -21,7 +20,8 @@ const Modal:FC<IModal> = ({setIsOpen,gameStatus,newGame,giveUp})=>{
                     'NEW_GAME':<NewGame/>,
                     'X_WON':<WinScreen newGame={newGame} winner='X'/>,
                     'O_WON':<WinScreen newGame={newGame} winner='O'/>,
-                    'PLAYING':<PauseScreen giveUp={giveUp} resetGame={newGame}/>
+                    'EMPATE':<WinScreen newGame={newGame} winner='Todos'/>,
+                    'PLAYING':<PauseScreen resetGame={newGame}/>
                 }[gameStatus]
             }            
         </div>        

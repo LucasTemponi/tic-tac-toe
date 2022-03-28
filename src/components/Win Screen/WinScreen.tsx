@@ -8,17 +8,31 @@ interface IProps{
 }
 
 const WinScreen:FC<IProps> = ({winner,newGame}) => {
-    return (
-        <div className="win-screen">
-           <img src={winnerImage} alt={`${winner} won`}/>
-            <h1>Vitória do {winner}!</h1>
-            <button onClick={()=>{
-                newGame()
-            }}>
-                Novo Jogo
-            </button>
-        </div>
-    )
+    if (winner === 'Todos'){
+        return (
+            <div className="win-screen">
+               <img src={winnerImage} alt={`${winner} won`}/>
+                <h1>Todos são vencedores!</h1>
+                <button onClick={()=>{
+                    newGame()
+                }}>
+                    Novo Jogo
+                </button>
+            </div>
+        )
+    }else{
+        return (
+            <div className="win-screen">
+            <img src={winnerImage} alt={`${winner} won`}/>
+                <h1>Vitória do {winner}!</h1>
+                <button onClick={()=>{
+                    newGame()
+                }}>
+                    Novo Jogo
+                </button>
+            </div>
+        )
+    }
 }
 
 export default WinScreen

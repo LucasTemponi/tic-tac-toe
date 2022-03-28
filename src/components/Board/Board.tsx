@@ -35,17 +35,20 @@ export const Board:FC = ()=>{
     }
 
     React.useEffect(()=>{
-        if(checkWin()){         
-            announceWinner();
+        const vencedor = checkWin()
+        if(checkWin()){ 
+            debugger        
+            announceWinner(vencedor);
             return
         }
-        if(!gameState.xIsNext){
+        if(!gameState.xIsNext && !gameState.winner ){
             setTimeout(()=>{superAI()},600);
         }
     // eslint-disable-next-line react-hooks/exhaustive-deps
     },[gameState.board])
 
     const checkWin = ()=>{
+        const empate = (gameState.board[0].indexOf('')=== -1 && gameState.board[1].indexOf('')===-1 && gameState.board[2].indexOf('')===-1)
         for (let i = 0; i < gameState.board.length; i++) {
             if (gameState.board[i][0] === gameState.board[i][1] && gameState.board[i][1] === gameState.board[i][2]&& gameState.board[i][1]!=='') {
                 return gameState.board[i][0];
@@ -62,7 +65,10 @@ export const Board:FC = ()=>{
         if (gameState.board[0][2] === gameState.board[1][1] && gameState.board[1][1] === gameState.board[2][0] && gameState.board[0][2] !== '') {
             return gameState.board[0][2];
         }
-        return false;
+        if (empate){
+            return "Empate"
+        }
+        return '';
     }
 
     const superAI = ()=>{
@@ -77,11 +83,15 @@ export const Board:FC = ()=>{
         }        
     }
 
-    const announceWinner = function () {
-        let lastPlayer:string = gameState.xIsNext ? 'O':'X' ;
-        setGameState({...gameState,winner:lastPlayer,status:`${lastPlayer}_WON`});
+    const announceWinner = function (vencedor:string) {
+        if (vencedor === "Empate"){
+            setGameState({...gameState,winner:'EMPATE',status:'EMPATE'});
+        } else{            
+            let lastPlayer:string = gameState.xIsNext ? 'O':'X' ;
+            setGameState({...gameState,winner:lastPlayer,status:`${lastPlayer}_WON`});
+            console.log(`${lastPlayer} wins!`);
+        }
         setIsOpen(true);
-        console.log(`${lastPlayer} wins!`);
     }
 
     const restartGame = ()=>{
@@ -99,7 +109,7 @@ export const Board:FC = ()=>{
     return (
         <body>
             <Header setIsOpen={()=>setIsOpen(!isOpen)}/>
-            {isOpen && <Modal newGame={restartGame} giveUp={announceWinner} gameStatus={gameState.status} setIsOpen={()=>setIsOpen(!isOpen)}/>}
+            {isOpen && <Modal newGame={restartGame} gameStatus={gameState.status} setIsOpen={()=>setIsOpen(!isOpen)}/>}
             <div className="ticTacToe">
                 {gameState.board.map((column,index) => <Column clickFunc = {play} column={column} key={index} columnNumber={index}/> )}
             </div>            
