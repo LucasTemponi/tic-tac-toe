@@ -1,7 +1,7 @@
 import {FC} from 'react'
 
 interface IProps{
-    resetGame:()=>void;
+    resetGame:()=>void
 }
 
 const PauseScreen:FC<IProps> = ({resetGame})=>{

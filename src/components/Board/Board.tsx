@@ -17,29 +17,29 @@ export const Board:FC = ()=>{
         board:[
             ['', '', ''],
             ['', '', ''],
-            ['', '', '']],
+            ['', '', '']
+        ],
         xIsNext:true,
         winner:'',
-        status:'NEW_GAME'    
+        status:'NEW_GAME',    
     })
     const [isOpen,setIsOpen] = React.useState<boolean>(true)
 
     const play = (column:number,row:number)=>{  
         if(!gameState.winner){
             if(!gameState.board[column][row]){
-                let squareState:string[][] = gameState.board.slice()
-                squareState[column][row]= gameState.xIsNext ? 'X':'O'
-                setGameState({...gameState,xIsNext:!gameState.xIsNext,board:squareState,status:'PLAYING'})
+                let squareState:string[][] = gameState.board.slice();
+                squareState[column][row]= gameState.xIsNext ? 'X':'O';
+                setGameState({...gameState,xIsNext:!gameState.xIsNext,board:squareState,status:'PLAYING'});
             }
         }         
     }
 
     React.useEffect(()=>{
         const vencedor = checkWin()
-        if(checkWin()){ 
-            debugger        
+        if(checkWin()){        
             announceWinner(vencedor);
-            return
+            return;
         }
         if(!gameState.xIsNext && !gameState.winner ){
             setTimeout(()=>{superAI()},600);
@@ -48,7 +48,7 @@ export const Board:FC = ()=>{
     },[gameState.board])
 
     const checkWin = ()=>{
-        const empate = (gameState.board[0].indexOf('')=== -1 && gameState.board[1].indexOf('')===-1 && gameState.board[2].indexOf('')===-1)
+        const empate = (gameState.board[0].indexOf('')=== -1 && gameState.board[1].indexOf('')===-1 && gameState.board[2].indexOf('')===-1);
         for (let i = 0; i < gameState.board.length; i++) {
             if (gameState.board[i][0] === gameState.board[i][1] && gameState.board[i][1] === gameState.board[i][2]&& gameState.board[i][1]!=='') {
                 return gameState.board[i][0];
@@ -102,7 +102,7 @@ export const Board:FC = ()=>{
                 ['', '', '']],
             xIsNext:true,
             winner:'',
-            status:'NEW_GAME'    
+            status:'NEW_GAME'
         });
     }
 

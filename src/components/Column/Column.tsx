@@ -3,8 +3,8 @@ import Square from '../Square/Squares'
 import {FC} from 'react'
 
 interface IColumn{
-    column:string[]
-    columnNumber:number
+    column:string[],
+    columnNumber:number,
     clickFunc:(column:number,square:number)=>void;
 }
 

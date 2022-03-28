@@ -8,7 +8,6 @@ interface ISquare{
 }
 
 export const Square: FC<ISquare> = ({children,handle,column,row})=>{
-
    return <span className='square' onClick={()=>handle(column,row)}>{children}</span>
 }
 
